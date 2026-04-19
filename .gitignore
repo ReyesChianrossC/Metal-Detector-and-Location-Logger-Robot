@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Arduino backups and temp files
+*.backup
+*.tmp
+*.bak
+*~
+
+# Python (if any)
+__pycache__/
+*.pyc
+
+# Node (if any)
+node_modules/

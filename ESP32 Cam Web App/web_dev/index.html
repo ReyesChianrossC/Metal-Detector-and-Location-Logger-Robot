@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G.E.M.S. Interface</title>
+    
+    <!-- Google Fonts - Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Video Stream Background -->
+    <div class="video-background">
+        <img 
+            id="videoStream" 
+            src="https://10.151.89.49/stream" 
+            alt="ESP32-CAM Stream"
+        >
+        <div class="video-overlay"></div>
+        <div class="gold-flash" id="goldFlash"></div>
+    </div>
+
+    <!-- G.E.M.S. HUD Interface -->
+    <div class="gems-hud">
+        
+        <!-- Corner Decorations -->
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+        <!-- View Log Button -->
+        <button class="view-log-btn" id="viewLogBtn">VIEW LOG</button>
+
+        <!-- Reset Button -->
+        <button class="reset-btn" id="resetBtn">RESET</button>
+
+        <!-- Top Header -->
+        <div class="hud-header">
+            <div class="header-left">
+                <span class="system-name">G.E.M.S.</span>
+                <span class="system-subtitle">Metal Detection Robot</span>
+                <span class="system-status">ONLINE</span>
+            </div>
+            <div class="header-center">
+                <span class="time" id="currentTime">00:00:00</span>
+            </div>
+            <div class="header-right">
+                <span class="system-label">v1.0</span>
+                <div class="status-indicator active"></div>
+            </div>
+        </div>
+
+        <!-- Left Panel -->
+        <div class="hud-panel hud-left">
+            <div class="panel-title">SYSTEM STATUS</div>
+            <div class="panel-content">
+                <div class="data-line">
+                    <span class="data-label">CONNECTION</span>
+                    <span class="data-value green">STABLE</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">STREAM</span>
+                    <span class="data-value green">ACTIVE</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">FPS</span>
+                    <span class="data-value" id="fpsValue">30</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">RESOLUTION</span>
+                    <span class="data-value" id="resValue">640x480</span>
+                </div>
+            </div>
+            
+            <div class="panel-divider"></div>
+            
+            <div class="panel-title">DIAGNOSTICS</div>
+            <div class="panel-content">
+                <div class="data-line">
+                    <span class="data-label">POWER</span>
+                    <span class="data-value green">OPTIMAL</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">SIGNAL</span>
+                    <span class="data-value green">98%</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">LATENCY</span>
+                    <span class="data-value" id="latency">24ms</span>
+                </div>
+            </div>
+
+            <div class="panel-divider"></div>
+            
+            <div class="panel-title">METAL DETECTION</div>
+            <div class="panel-content">
+                <div class="detection-status" id="detectionStatus">
+                    <div class="detection-indicator" id="detectionIndicator"></div>
+                    <span class="detection-text" id="detectionText">SCANNING...</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">X-COORD</span>
+                    <span class="data-value" id="xCoord">--</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">Y-COORD</span>
+                    <span class="data-value" id="yCoord">--</span>
+                </div>
+                <div class="data-line">
+                    <span class="data-label">CONFIDENCE</span>
+                    <span class="data-value" id="confidence">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="hud-panel hud-right">
+            <div class="button-container">
+                <button class="hud-button" title="CAPTURE">◎</button>
+            </div>
+            <div class="button-container">
+                <button class="hud-button" title="RECORD">⬛</button>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="hud-footer">
+            <div class="footer-content">
+                <span class="copyright">G.E.M.S. INTERFACE v1.0 | METAL DETECTION ROBOT</span>
+                <div class="scanner-line"></div>
+            </div>
+        </div>
+
+        <!-- Scanning Lines -->
+        <div class="scan-lines"></div>
+
+        <!-- Notification Popup -->
+        <div class="notification-container" id="notificationContainer"></div>
+
+        <!-- Test Button -->
+        <button class="test-button" id="testButton">TEST</button>
+
+        <!-- Log Popup -->
+        <div class="log-popup" id="logPopup">
+            <div class="log-header">
+                <h2>METAL DETECTION LOG</h2>
+                <button class="log-close" id="logCloseBtn">×</button>
+            </div>
+            <div class="log-content">
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>TIME</th>
+                            <th>X-COORD</th>
+                            <th>Y-COORD</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- Logs will be added here -->
+                    </tbody>
+                </table>
+                <div class="log-empty" id="logEmpty">No detections recorded</div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
